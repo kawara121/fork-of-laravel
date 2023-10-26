@@ -54,7 +54,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'stderr'], // 追加
             'ignore_exceptions' => false,
         ],
 
@@ -98,7 +98,7 @@ return [
             'driver' => 'monolog',
             'level' => env('LOG_LEVEL', 'debug'),
             'handler' => StreamHandler::class,
-            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'formatter' => env('LOG_STDERR_FORMATTER', 'Monolog\\Formatter\\JsonFormatter'),
             'with' => [
                 'stream' => 'php://stderr',
             ],
