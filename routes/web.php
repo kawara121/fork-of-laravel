@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(TodoController::class)->group(function () {
+    // 名前付きルート名を設定
+    Route::get('/todos', 'index')->name('todos.index');
+    // 同一URIでもリクエスト毎に名前を設定
+    Route::post('/todos', 'store')->name('todos.store');
+    Route::patch('/todos/{todo}', 'update')->name('todos.update');
+    Route::delete('/todos/{todo}', 'destroy')->name('todos.destroy');
 });
+
+// リダイレクトルート
+Route::redirect('/legacy-url', '/todos', 301);
+// フォールバックルートは命名任意、クロージャ可
+Route::fallback(fn () => abort(404));
