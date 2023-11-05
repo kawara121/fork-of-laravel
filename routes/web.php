@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::controller(TodoController::class)->group(function () {
     // 名前付きルート名を設定
     Route::get('/todos', 'index')->name('todos.index');
